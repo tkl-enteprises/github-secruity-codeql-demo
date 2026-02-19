@@ -2422,7 +2422,7 @@
       height = visualViewport.height;
       var layoutViewport = isLayoutViewport();
 
-      if (layoutViewport || !layoutViewport && strategy === 'fixed') {
+      if (layoutViewport || strategy === 'fixed') {
         x = visualViewport.offsetLeft;
         y = visualViewport.offsetTop;
       }
