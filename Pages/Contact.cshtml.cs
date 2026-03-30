@@ -25,37 +25,32 @@ namespace _1202demoapp.Pages
 
         public void OnGet()
         {
-            // SECURITY ISSUE: Not logging page access - CodeQL should detect this
-            // No audit trail of who viewed the contact form
+            _logger.LogInformation("Contact form page accessed at {Time}", DateTime.UtcNow);
         }
 
         public IActionResult OnPost()
         {
-            // SECURITY ISSUE: Processing user input without any logging
-            // This makes it impossible to audit who submitted what data
-            // No way to track potential abuse or investigate incidents
-            
+            _logger.LogInformation("Contact form submitted at {Time}", DateTime.UtcNow);
+
             if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Email))
             {
+                _logger.LogWarning("Contact form submission failed: missing required fields");
                 return Page();
             }
 
-            // Processing form without audit trail
             SubmitSuccess = true;
             return Page();
         }
 
         public IActionResult OnPostDelete(int id)
         {
-            // CRITICAL SECURITY ISSUE: Deleting data without logging
-            // No audit trail for destructive operations
-            // Impossible to investigate unauthorized deletions
+            _logger.LogInformation("Contact delete operation requested for id {Id} at {Time}", id, DateTime.UtcNow);
             return RedirectToPage();
         }
-        
+
         public IActionResult OnPostApprove(int id)
         {
-            // Another method without logging
+            _logger.LogInformation("Contact approve operation requested for id {Id} at {Time}", id, DateTime.UtcNow);
             return RedirectToPage();
         }
     }
