@@ -686,7 +686,18 @@ $.extend( $.validator, {
 		},
 
 		clean: function( selector ) {
-			return $( selector )[ 0 ];
+
+			// Ensure we only ever return a real DOM element here and never interpret
+			// arbitrary strings as HTML via the jQuery constructor.
+			if ( selector && selector.jquery ) {
+				return selector[ 0 ];
+			}
+
+			if ( selector && ( selector.nodeType === 1 || selector.nodeType === 9 ) ) {
+				return selector;
+			}
+
+			return undefined;
 		},
 
 		errors: function() {
@@ -1082,7 +1093,11 @@ $.extend( $.validator, {
 				element = this.findByName( element.name );
 			}
 
-			// Always apply ignore filter
+			// Always apply ignore filter, but ensure we only wrap real DOM elements
+			if ( !element || !( element.nodeType === 1 || element.nodeType === 9 ) ) {
+				return undefined;
+			}
+
 			return $( element ).not( this.settings.ignore )[ 0 ];
 		},
 
