@@ -1,0 +1,45 @@
+@page
+@model _1202demoapp.Pages.AAAModel
+@{
+    ViewData["Title"] = "AAA - Authentication, Authorization, and Accounting";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>This page demonstrates the AAA security framework.</p>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>What is AAA?</h2>
+        <p>AAA stands for Authentication, Authorization, and Accounting:</p>
+        <ul>
+            <li><strong>Authentication:</strong> Verifying the identity of users</li>
+            <li><strong>Authorization:</strong> Determining what authenticated users are allowed to do</li>
+            <li><strong>Accounting:</strong> Tracking and logging user activities for audit purposes</li>
+        </ul>
+
+        <h3>User Login Simulation</h3>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label">Username</label>
+                <input asp-for="Username" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Action" class="form-label">Action</label>
+                <select asp-for="Action" class="form-control">
+                    <option value="">Select an action...</option>
+                    <option value="read">Read Data</option>
+                    <option value="write">Write Data</option>
+                    <option value="delete">Delete Data</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Perform Action</button>
+        </form>
+
+        @if (Model.ActionPerformed)
+        {
+            <div class="alert alert-info mt-3">
+                <strong>Action Result:</strong> @Model.ResultMessage
+            </div>
+        }
+    </div>
+</div>
